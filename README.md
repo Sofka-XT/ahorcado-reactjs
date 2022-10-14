@@ -50,6 +50,22 @@ https://microk8s.io/#install-microk8s
 
 `kubectl delete deployment ahorcado-reactjs`
 
+#### Crear un empaquetador 
+
+installar https://helm.sh/docs/intro/install/
+
+Habilitar: 
+
+`microk8s enable helm3`
+
+Crear empaquetado y parametrizar:
+
+`helm create ahorcado-reactjs`
+
+- Cambiar la imagen en la implementación en valores 
+- Cambiar la versión o tag en valores
+- Cambiar el puerto de mapeo dentro del servicio
+
 ## Conclusion
 
 En este tutorial, aprendimos cómo crear una aplicación React y compilarla para producción. Después de crear la aplicación, aprendimos cómo dockerizarla y enviarla a su cuenta de Docker Hub. Finalmente, aprendimos cómo crear y configurar un clúster local de Kubernetes, implementar la aplicación React dockerizada en el clúster y cómo escalar la aplicación.

@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Juego de Ahorcado: ReactJS+Docker+Kubernetes
+En este pequeño proyecto vamos a explorar los fundamentos de reactjs aplicando un simple juego de ahorcado. Con base a este juego podemos compreder fundamentos de ReactJS. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Puedes ver como se realizó este juego aquí:
 
-## Available Scripts
+https://www.youtube.com/watch?v=uOnH_oqIfSU&list=PL0IrPQPrkqoFRvLMemCJTboxQtC8MvUUS
 
-In the project directory, you can run:
+## Instacción y puesta en marcha
 
-### `npm start`
+### `npm install` para instalar
+### `npm run start` para correr
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Practica de Kubernetes
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Ya teniendo en cuenta lo anterior vamos a desplegarlo dentro de un sistema de contenedores, ante esto debemos hacer lo siguientes pasos:
 
-### `npm test`
+### Construir la aplicación
+`npm run build`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Compilar la solución con docker
+`docker build -t xtsofka/ahorcado-reactjs .`
 
-### `npm run build`
+### Publicar la imagen en un register publico
+`docker push xtsofka/ahorcado-reactjs:latest`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Instalamos con cluster para kubernetes 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+En el siguiente link vamos a explorar e instalar un cluster para trabajo local:
 
-### `npm run eject`
+https://microk8s.io/#install-microk8s
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`microk8s start`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Aplicamos el manifiesto de kubernetes 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`kubectl apply -f deployment.yaml`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`kubectl get deployment -w`
 
-## Learn More
+`kubectl get nodes -o wide`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`kubectl scale deployment ahorcado-reactjs --replicas=10`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`kubectl get deployment -w`
 
-### Code Splitting
+`kubectl scale deployment ahorcado-reactjs --replicas=3`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`kubectl delete service ahorcado-reactjs`
 
-### Analyzing the Bundle Size
+`kubectl delete deployment ahorcado-reactjs`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Conclusion
 
-### Making a Progressive Web App
+En este tutorial, aprendimos cómo crear una aplicación React y compilarla para producción. Después de crear la aplicación, aprendimos cómo dockerizarla y enviarla a su cuenta de Docker Hub. Finalmente, aprendimos cómo crear y configurar un clúster local de Kubernetes, implementar la aplicación React dockerizada en el clúster y cómo escalar la aplicación.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Para obtener más información sobre cómo acoplar aplicaciones y cómo implementarlas en un clúster de Kubernetes, asegúrese de leer la documentación de Docker y Kubernetes.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
